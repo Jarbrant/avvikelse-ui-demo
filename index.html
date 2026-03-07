@@ -1,16 +1,16 @@
 <!--
-=====================================================
-AVVIKELSE SYSTEM DEMO
+==================================================
+AVVIKELSE SYSTEM DEMO – VERSION 2
 Purpose:
-UI Prototype for deviation management system
+Modern UI demo for deviation management
 
-This file loads:
-- styles
-- demo data
-- UI logic
-
-No backend required
-=====================================================
+Features
+- dashboard
+- create deviation
+- comments
+- status
+- priority
+==================================================
 -->
 
 <!DOCTYPE html>
@@ -19,11 +19,9 @@ No backend required
 <head>
 
 <meta charset="UTF-8">
-<title>Avvikelser - Demo</title>
 
-<!-- =================================================
-LOAD STYLES
-================================================= -->
+<title>Avvikelser</title>
+
 <link rel="stylesheet" href="css/styles.css">
 
 </head>
@@ -31,126 +29,151 @@ LOAD STYLES
 
 <body>
 
-<!-- =================================================
+<!-- ============================================
 HEADER
-================================================= -->
+============================================ -->
 
 <header class="header">
 
 <h1>Avvikelser</h1>
 
-<button id="createDeviationBtn">
+<div>
+
+<button class="secondary">
+Exportera
+</button>
+
+<button id="createDeviationBtn" class="primary">
 + Ny avvikelse
 </button>
+
+</div>
 
 </header>
 
 
 
-<!-- =================================================
+<!-- ============================================
+DASHBOARD
+============================================ -->
+
+<section class="dashboard">
+
+<div class="stat-card">
+<h3>Totalt</h3>
+<p id="totalCount">0</p>
+</div>
+
+<div class="stat-card">
+<h3>Nya</h3>
+<p id="newCount">0</p>
+</div>
+
+<div class="stat-card">
+<h3>Under utredning</h3>
+<p id="progressCount">0</p>
+</div>
+
+<div class="stat-card">
+<h3>Åtgärdade</h3>
+<p id="resolvedCount">0</p>
+</div>
+
+</section>
+
+
+
+<!-- ============================================
 FILTER PANEL
-Similar style as modern SaaS dashboards
-================================================= -->
+============================================ -->
 
 <section class="filter-panel">
 
 <input
 type="text"
-placeholder="Sök avvikelse, restaurang, kund..."
+placeholder="Sök avvikelse..."
 id="searchInput"
 />
 
-<select>
-<option>Alla typer</option>
-<option>Saknad måltid</option>
-<option>Temperatur</option>
-<option>Fel leverans</option>
-</select>
+<select id="statusFilter">
 
-<select>
-<option>Alla status</option>
-<option>Ny</option>
-<option>Under utredning</option>
-<option>Åtgärdad</option>
+<option value="">Alla status</option>
+<option value="Ny">Ny</option>
+<option value="Under utredning">Under utredning</option>
+<option value="Åtgärdad">Åtgärdad</option>
+
 </select>
 
 </section>
 
 
 
-<!-- =================================================
+<!-- ============================================
 DEVIATION LIST
-This area will be filled dynamically
-================================================= -->
+============================================ -->
 
 <section id="deviationList">
 
-<!-- JS renders deviations here -->
-
 </section>
 
 
 
-<!-- =================================================
-CREATE DEVIATION MODAL
-Hidden until button click
-================================================= -->
+<!-- ============================================
+CREATE MODAL
+============================================ -->
 
 <div id="createModal" class="modal hidden">
 
 <div class="modal-content">
 
-<h2>Skapa avvikelse</h2>
+<h2>Ny avvikelse</h2>
 
-
-<label>Typ av avvikelse</label>
+<label>Typ</label>
 <select id="typeInput">
-<option>Saknad matlåda</option>
+<option>Saknad måltid</option>
 <option>Temperatur</option>
 <option>Fel leverans</option>
 <option>Övrigt</option>
 </select>
 
+<label>Prioritet</label>
+<select id="priorityInput">
+<option>Låg</option>
+<option>Normal</option>
+<option>Hög</option>
+<option>Akut</option>
+</select>
 
-<label>Datum för händelse</label>
+<label>Datum</label>
 <input type="date" id="dateInput">
-
 
 <label>Restaurang</label>
 <input type="text" id="restaurantInput">
 
-
 <label>Beskrivning</label>
 <textarea id="descriptionInput"></textarea>
-
 
 <label>Skapad av</label>
 <input type="text" id="createdByInput">
 
-
-<button id="saveDeviation">
-Skapa avvikelse
+<button id="saveDeviation" class="primary">
+Skapa
 </button>
 
-
-<button id="closeModal">
+<button id="closeModal" class="secondary">
 Stäng
 </button>
 
-
 </div>
 
 </div>
 
 
-
-<!-- =================================================
-LOAD DATA AND APP LOGIC
-================================================= -->
 
 <script src="data/demo-data.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/comments.js"></script>
 <script src="js/app.js"></script>
-
 
 </body>
 </html>
