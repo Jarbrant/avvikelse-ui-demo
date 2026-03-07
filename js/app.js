@@ -1,136 +1,268 @@
-/* =================================================
-APP LOGIC
-Handles:
+/* ==========================================================
+FILE: app.js
+PURPOSE:
+Main application logic for the deviation UI demo.
 
+Handles:
 - rendering deviations
 - creating deviations
-- modal control
+- modal controls
+- submitting comments
 
-================================================= */
+Depends on:
+data/demo-data.js
+js/comments.js
+js/dashboard.js
+========================================================== */
 
 
-/* ================================================
-RENDER DEVIATIONS
-================================================ */
+
+/* ==========================================================
+FUNCTION
+renderDeviations()
+
+Creates the UI cards for all deviations.
+========================================================== */
 
 function renderDeviations(){
 
-const container =
-document.getElementById("deviationList")
+    const container =
+    document.getElementById("deviationList")
 
-container.innerHTML = ""
-
-
-deviations.forEach(dev =>{
-
-const card = document.createElement("div")
-card.className = "deviation-card"
+    container.innerHTML = ""
 
 
-card.innerHTML = `
+    deviations.forEach(function(dev){
 
-<h3>${dev.type}</h3>
+        /* --------------------------------------------------
+        Create card element
+        -------------------------------------------------- */
 
-<p><strong>Restaurang:</strong> ${dev.restaurant}</p>
+        const card =
+        document.createElement("div")
 
-<p><strong>Datum:</strong> ${dev.date}</p>
+        card.className =
+        "deviation-card"
 
-<p><strong>Skapad av:</strong> ${dev.createdBy}</p>
 
-<p>${dev.description}</p>
 
-<span class="badge badge-new">${dev.status}</span>
+        /* --------------------------------------------------
+        Render comments
+        -------------------------------------------------- */
 
-`
+        let commentsHTML = ""
 
-container.appendChild(card)
+        dev.comments.forEach(function(comment){
 
-})
+            commentsHTML += `
+
+            <div class="comment">
+
+                <strong>${comment.author}</strong>
+
+                <p>${comment.text}</p>
+
+            </div>
+
+            `
+
+        })
+
+
+
+        /* --------------------------------------------------
+        Build card HTML
+        -------------------------------------------------- */
+
+        card.innerHTML = `
+
+        <div class="card-header">
+
+            <h3>${dev.type}</h3>
+
+            <span class="priority">${dev.priority}</span>
+
+        </div>
+
+        <p>
+        <strong>Restaurang:</strong>
+        ${dev.restaurant}
+        </p>
+
+        <p>
+        <strong>Datum:</strong>
+        ${dev.date}
+        </p>
+
+        <p>
+        <strong>Skapad av:</strong>
+        ${dev.createdBy}
+        </p>
+
+        <p>${dev.description}</p>
+
+
+        ${commentsHTML}
+
+
+        <div class="comment-input">
+
+            <input
+            id="comment-${dev.id}"
+            placeholder="Skriv svar..."
+            >
+
+            <button
+            onclick="submitComment(${dev.id})"
+            >
+            Svara
+            </button>
+
+        </div>
+
+        `
+
+
+        /* --------------------------------------------------
+        Add card to container
+        -------------------------------------------------- */
+
+        container.appendChild(card)
+
+    })
+
+
+    /* ------------------------------------------------------
+    Update dashboard statistics
+    ------------------------------------------------------ */
+
+    updateDashboard()
 
 }
 
 
 
-/* ================================================
-OPEN MODAL
-================================================ */
 
-document
-.getElementById("createDeviationBtn")
-.onclick = function(){
+/* ==========================================================
+FUNCTION
+submitComment()
 
-document
-.getElementById("createModal")
-.classList.remove("hidden")
+Triggered when user clicks "Svara".
+========================================================== */
 
-}
+function submitComment(id){
 
+    const input =
+    document.getElementById(`comment-${id}`)
 
+    const text =
+    input.value
 
-/* ================================================
-CLOSE MODAL
-================================================ */
-
-document
-.getElementById("closeModal")
-.onclick = function(){
-
-document
-.getElementById("createModal")
-.classList.add("hidden")
+    addComment(id, text)
 
 }
 
 
 
-/* ================================================
-SAVE NEW DEVIATION
-================================================ */
+/* ==========================================================
+CREATE NEW DEVIATION
+========================================================== */
 
 document
 .getElementById("saveDeviation")
 .onclick = function(){
 
-const newDeviation = {
+    /* ------------------------------------------------------
+    Build new deviation object
+    ------------------------------------------------------ */
 
-id: Date.now(),
+    const newDeviation = {
 
-type:
-document.getElementById("typeInput").value,
+        id: Date.now(),
 
-date:
-document.getElementById("dateInput").value,
+        type:
+        document.getElementById("typeInput").value,
 
-restaurant:
-document.getElementById("restaurantInput").value,
+        priority:
+        document.getElementById("priorityInput").value,
 
-description:
-document.getElementById("descriptionInput").value,
+        date:
+        document.getElementById("dateInput").value,
 
-createdBy:
-document.getElementById("createdByInput").value,
+        restaurant:
+        document.getElementById("restaurantInput").value,
 
-status:"Ny",
+        description:
+        document.getElementById("descriptionInput").value,
 
-comments:[]
+        createdBy:
+        document.getElementById("createdByInput").value,
+
+        status: "Ny",
+
+        comments: []
+
+    }
+
+
+    /* ------------------------------------------------------
+    Add to global array
+    ------------------------------------------------------ */
+
+    deviations.push(newDeviation)
+
+
+
+    /* ------------------------------------------------------
+    Refresh UI
+    ------------------------------------------------------ */
+
+    renderDeviations()
+
+
+
+    /* ------------------------------------------------------
+    Close modal
+    ------------------------------------------------------ */
+
+    document
+    .getElementById("createModal")
+    .classList.add("hidden")
 
 }
 
 
-deviations.push(newDeviation)
 
-renderDeviations()
+/* ==========================================================
+MODAL CONTROL
+========================================================== */
 
 document
-.getElementById("createModal")
-.classList.add("hidden")
+.getElementById("createDeviationBtn")
+.onclick = function(){
+
+    document
+    .getElementById("createModal")
+    .classList.remove("hidden")
 
 }
 
 
 
-/* ================================================
-INITIAL RENDER
-================================================ */
+document
+.getElementById("closeModal")
+.onclick = function(){
+
+    document
+    .getElementById("createModal")
+    .classList.add("hidden")
+
+}
+
+
+
+/* ==========================================================
+INITIAL PAGE LOAD
+========================================================== */
 
 renderDeviations()
