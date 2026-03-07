@@ -1,1 +1,156 @@
+<!--
+=====================================================
+AVVIKELSE SYSTEM DEMO
+Purpose:
+UI Prototype for deviation management system
 
+This file loads:
+- styles
+- demo data
+- UI logic
+
+No backend required
+=====================================================
+-->
+
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+
+<meta charset="UTF-8">
+<title>Avvikelser - Demo</title>
+
+<!-- =================================================
+LOAD STYLES
+================================================= -->
+<link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+
+<body>
+
+<!-- =================================================
+HEADER
+================================================= -->
+
+<header class="header">
+
+<h1>Avvikelser</h1>
+
+<button id="createDeviationBtn">
++ Ny avvikelse
+</button>
+
+</header>
+
+
+
+<!-- =================================================
+FILTER PANEL
+Similar style as modern SaaS dashboards
+================================================= -->
+
+<section class="filter-panel">
+
+<input
+type="text"
+placeholder="Sök avvikelse, restaurang, kund..."
+id="searchInput"
+/>
+
+<select>
+<option>Alla typer</option>
+<option>Saknad måltid</option>
+<option>Temperatur</option>
+<option>Fel leverans</option>
+</select>
+
+<select>
+<option>Alla status</option>
+<option>Ny</option>
+<option>Under utredning</option>
+<option>Åtgärdad</option>
+</select>
+
+</section>
+
+
+
+<!-- =================================================
+DEVIATION LIST
+This area will be filled dynamically
+================================================= -->
+
+<section id="deviationList">
+
+<!-- JS renders deviations here -->
+
+</section>
+
+
+
+<!-- =================================================
+CREATE DEVIATION MODAL
+Hidden until button click
+================================================= -->
+
+<div id="createModal" class="modal hidden">
+
+<div class="modal-content">
+
+<h2>Skapa avvikelse</h2>
+
+
+<label>Typ av avvikelse</label>
+<select id="typeInput">
+<option>Saknad matlåda</option>
+<option>Temperatur</option>
+<option>Fel leverans</option>
+<option>Övrigt</option>
+</select>
+
+
+<label>Datum för händelse</label>
+<input type="date" id="dateInput">
+
+
+<label>Restaurang</label>
+<input type="text" id="restaurantInput">
+
+
+<label>Beskrivning</label>
+<textarea id="descriptionInput"></textarea>
+
+
+<label>Skapad av</label>
+<input type="text" id="createdByInput">
+
+
+<button id="saveDeviation">
+Skapa avvikelse
+</button>
+
+
+<button id="closeModal">
+Stäng
+</button>
+
+
+</div>
+
+</div>
+
+
+
+<!-- =================================================
+LOAD DATA AND APP LOGIC
+================================================= -->
+
+<script src="data/demo-data.js"></script>
+<script src="js/app.js"></script>
+
+
+</body>
+</html>
