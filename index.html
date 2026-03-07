@@ -1,15 +1,17 @@
 <!--
 ==================================================
-AVVIKELSE SYSTEM DEMO – VERSION 2
-Purpose:
-Modern UI demo for deviation management
+AVVIKELSE SYSTEM DEMO – VERSION 3
 
-Features
-- dashboard
-- create deviation
-- comments
-- status
-- priority
+Roller:
+- Beställare (ex: omsorg, skola)
+- Restaurang (kök)
+
+Funktioner:
+- Skapa avvikelse (båda roller)
+- Svara / kommentera
+- Åtgärdsplan
+- Dashboard med statistik
+- Filtrering & sök
 ==================================================
 -->
 
@@ -20,7 +22,7 @@ Features
 
 <meta charset="UTF-8">
 
-<title>Avvikelser</title>
+<title>Avvikelsehantering</title>
 
 <link rel="stylesheet" href="css/styles.css">
 
@@ -30,86 +32,116 @@ Features
 <body>
 
 <!-- ============================================
-HEADER
+     HEADER
 ============================================ -->
 
 <header class="header">
 
-<h1>Avvikelser</h1>
+    <div class="header-left">
+        <h1>🔔 Avvikelsehantering</h1>
+        <span class="header-subtitle">Demo – Måltidsservice</span>
+    </div>
 
-<div>
+    <div class="header-right">
 
-<button class="secondary">
-Exportera
-</button>
+        <div class="role-switcher">
+            <label for="roleSelect">Inloggad som:</label>
+            <select id="roleSelect">
+                <option value="Beställare">📋 Beställare (Adela Omsorg)</option>
+                <option value="Restaurang">🍳 Restaurang (Köket Brahem)</option>
+            </select>
+        </div>
 
-<button id="createDeviationBtn" class="primary">
-+ Ny avvikelse
-</button>
+        <button id="createDeviationBtn" class="btn primary">
+            + Ny avvikelse
+        </button>
 
-</div>
+    </div>
 
 </header>
 
 
 
 <!-- ============================================
-DASHBOARD
+     DASHBOARD
 ============================================ -->
 
 <section class="dashboard">
 
-<div class="stat-card">
-<h3>Totalt</h3>
-<p id="totalCount">0</p>
-</div>
+    <div class="stat-card">
+        <span class="stat-icon">📊</span>
+        <h3>Totalt</h3>
+        <p id="totalCount">0</p>
+    </div>
 
-<div class="stat-card">
-<h3>Nya</h3>
-<p id="newCount">0</p>
-</div>
+    <div class="stat-card stat-new">
+        <span class="stat-icon">🆕</span>
+        <h3>Nya</h3>
+        <p id="newCount">0</p>
+    </div>
 
-<div class="stat-card">
-<h3>Under utredning</h3>
-<p id="progressCount">0</p>
-</div>
+    <div class="stat-card stat-progress">
+        <span class="stat-icon">🔍</span>
+        <h3>Under utredning</h3>
+        <p id="progressCount">0</p>
+    </div>
 
-<div class="stat-card">
-<h3>Åtgärdade</h3>
-<p id="resolvedCount">0</p>
-</div>
+    <div class="stat-card stat-action">
+        <span class="stat-icon">📝</span>
+        <h3>Åtgärdsplan</h3>
+        <p id="actionCount">0</p>
+    </div>
+
+    <div class="stat-card stat-done">
+        <span class="stat-icon">✅</span>
+        <h3>Åtgärdade</h3>
+        <p id="resolvedCount">0</p>
+    </div>
 
 </section>
 
 
 
 <!-- ============================================
-FILTER PANEL
+     FILTER PANEL
 ============================================ -->
 
 <section class="filter-panel">
 
-<input
-type="text"
-placeholder="Sök avvikelse..."
-id="searchInput"
-/>
+    <input
+        type="text"
+        placeholder="🔎 Sök avvikelse..."
+        id="searchInput"
+    />
 
-<select id="statusFilter">
+    <select id="statusFilter">
+        <option value="">Alla status</option>
+        <option value="Ny">Ny</option>
+        <option value="Under utredning">Under utredning</option>
+        <option value="Åtgärdsplan">Åtgärdsplan</option>
+        <option value="Åtgärdad">Åtgärdad</option>
+    </select>
 
-<option value="">Alla status</option>
-<option value="Ny">Ny</option>
-<option value="Under utredning">Under utredning</option>
-<option value="Åtgärdad">Åtgärdad</option>
+    <select id="directionFilter">
+        <option value="">Alla riktningar</option>
+        <option value="Beställare → Restaurang">Beställare → Restaurang</option>
+        <option value="Restaurang → Beställare">Restaurang → Beställare</option>
+    </select>
 
-</select>
+    <select id="priorityFilter">
+        <option value="">Alla prioriteter</option>
+        <option value="Låg">Låg</option>
+        <option value="Normal">Normal</option>
+        <option value="Hög">Hög</option>
+        <option value="Akut">Akut</option>
+    </select>
 
 </section>
 
 
 
 <!-- ============================================
-DEVIATION LIST
+     DEVIATION LIST
 ============================================ -->
 
 <section id="deviationList">
@@ -119,52 +151,102 @@ DEVIATION LIST
 
 
 <!-- ============================================
-CREATE MODAL
+     CREATE MODAL
 ============================================ -->
 
 <div id="createModal" class="modal hidden">
 
-<div class="modal-content">
+    <div class="modal-content">
 
-<h2>Ny avvikelse</h2>
+        <div class="modal-header">
+            <h2>Ny avvikelse</h2>
+            <button id="closeModal" class="btn-icon">&times;</button>
+        </div>
 
-<label>Typ</label>
-<select id="typeInput">
-<option>Saknad måltid</option>
-<option>Temperatur</option>
-<option>Fel leverans</option>
-<option>Övrigt</option>
-</select>
+        <div class="modal-body">
 
-<label>Prioritet</label>
-<select id="priorityInput">
-<option>Låg</option>
-<option>Normal</option>
-<option>Hög</option>
-<option>Akut</option>
-</select>
+            <label>Riktning</label>
+            <select id="directionInput">
+                <option value="Beställare → Restaurang">Beställare → Restaurang</option>
+                <option value="Restaurang → Beställare">Restaurang → Beställare</option>
+            </select>
 
-<label>Datum</label>
-<input type="date" id="dateInput">
+            <label>Typ</label>
+            <select id="typeInput">
+                <option>Saknad måltid</option>
+                <option>Fel temperatur</option>
+                <option>Fel leverans</option>
+                <option>Allergi/specialkost</option>
+                <option>Felaktig beställning</option>
+                <option>Sen beställning</option>
+                <option>Övrigt</option>
+            </select>
 
-<label>Restaurang</label>
-<input type="text" id="restaurantInput">
+            <label>Prioritet</label>
+            <select id="priorityInput">
+                <option>Låg</option>
+                <option selected>Normal</option>
+                <option>Hög</option>
+                <option>Akut</option>
+            </select>
 
-<label>Beskrivning</label>
-<textarea id="descriptionInput"></textarea>
+            <label>Datum</label>
+            <input type="date" id="dateInput">
 
-<label>Skapad av</label>
-<input type="text" id="createdByInput">
+            <label>Enhet / Restaurang</label>
+            <input type="text" id="unitInput" placeholder="T.ex. Adela Omsorg eller Köket Brahem">
 
-<button id="saveDeviation" class="primary">
-Skapa
-</button>
+            <label>Beskrivning</label>
+            <textarea id="descriptionInput" placeholder="Beskriv avvikelsen i detalj..."></textarea>
 
-<button id="closeModal" class="secondary">
-Stäng
-</button>
+        </div>
+
+        <div class="modal-footer">
+            <button id="saveDeviation" class="btn primary">Skapa avvikelse</button>
+            <button id="cancelModal" class="btn secondary">Avbryt</button>
+        </div>
+
+    </div>
 
 </div>
+
+
+
+<!-- ============================================
+     ACTION PLAN MODAL
+============================================ -->
+
+<div id="actionModal" class="modal hidden">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>📝 Åtgärdsplan</h2>
+            <button id="closeActionModal" class="btn-icon">&times;</button>
+        </div>
+
+        <div class="modal-body">
+
+            <label>Orsaksanalys</label>
+            <textarea id="causeInput" placeholder="Vad var grundorsaken?"></textarea>
+
+            <label>Åtgärd</label>
+            <textarea id="actionInput" placeholder="Vilken åtgärd genomförs?"></textarea>
+
+            <label>Ansvarig</label>
+            <input type="text" id="responsibleInput" placeholder="Vem ansvarar för åtgärden?">
+
+            <label>Klart senast</label>
+            <input type="date" id="deadlineInput">
+
+        </div>
+
+        <div class="modal-footer">
+            <button id="saveAction" class="btn primary">Spara åtgärdsplan</button>
+            <button id="cancelActionModal" class="btn secondary">Avbryt</button>
+        </div>
+
+    </div>
 
 </div>
 
