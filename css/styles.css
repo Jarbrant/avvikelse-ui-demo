@@ -1,15 +1,18 @@
 /* ============================================
    GLOBAL STYLES
 ============================================ */
+
 body {
   font-family: Arial, sans-serif;
   background: #f4f6f9;
   margin: 0;
 }
 
+
 /* ============================================
    HEADER
 ============================================ */
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -19,9 +22,78 @@ body {
   border-bottom: 1px solid #ddd;
 }
 
+
+/* ============================================
+   BUTTONS
+============================================ */
+
+.primary {
+  background: #0066cc;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.primary:hover {
+  background: #0055aa;
+}
+
+.secondary {
+  background: #e9ecef;
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.secondary:hover {
+  background: #dde0e3;
+}
+
+
+/* ============================================
+   DASHBOARD
+============================================ */
+
+.dashboard {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background: white;
+  border-bottom: 1px solid #eee;
+}
+
+.stat-card {
+  flex: 1;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.stat-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.stat-card p {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+}
+
+
 /* ============================================
    FILTER PANEL
 ============================================ */
+
 .filter-panel {
   background: white;
   padding: 20px;
@@ -30,9 +102,19 @@ body {
   border-bottom: 1px solid #eee;
 }
 
+.filter-panel input,
+.filter-panel select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+
 /* ============================================
    DEVIATION CARD
 ============================================ */
+
 .deviation-card {
   background: white;
   padding: 20px;
@@ -41,21 +123,106 @@ body {
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.card-header h3 {
+  margin: 0;
+}
+
+.priority {
+  background: #e9ecef;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #555;
+}
+
+
+/* ============================================
+   COMMENTS
+============================================ */
+
+.comment {
+  background: #f8f9fa;
+  padding: 10px 14px;
+  margin-top: 10px;
+  border-radius: 6px;
+  border-left: 3px solid #0066cc;
+}
+
+.comment strong {
+  font-size: 13px;
+  color: #333;
+}
+
+.comment p {
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.comment-input {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.comment-input input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.comment-input button {
+  background: #0066cc;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.comment-input button:hover {
+  background: #0055aa;
+}
+
+
 /* ============================================
    STATUS BADGES
 ============================================ */
+
 .badge {
   padding: 5px 10px;
   border-radius: 6px;
   font-size: 12px;
 }
-.badge-new      { background: #ffdddd; }
-.badge-progress { background: #fff3cd; }
-.badge-done     { background: #d4edda; }
+
+.badge-new {
+  background: #ffdddd;
+}
+
+.badge-progress {
+  background: #fff3cd;
+}
+
+.badge-done {
+  background: #d4edda;
+}
+
 
 /* ============================================
    MODAL
 ============================================ */
+
 .modal {
   position: fixed;
   top: 0;
@@ -67,12 +234,48 @@ body {
   align-items: center;
   justify-content: center;
 }
+
 .modal-content {
   background: white;
   padding: 30px;
   width: 400px;
   border-radius: 10px;
 }
+
+.modal-content label {
+  display: block;
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  width: 100%;
+  padding: 8px 12px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.modal-content textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+.modal-content button {
+  margin-top: 16px;
+  margin-right: 8px;
+}
+
+
+/* ============================================
+   UTILITY
+============================================ */
 
 .hidden {
   display: none;
