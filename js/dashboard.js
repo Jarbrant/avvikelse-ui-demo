@@ -1,91 +1,33 @@
 /* ==========================================================
-FILE: dashboard.js
-PURPOSE:
-Handles statistics shown in the dashboard section.
-
-This file calculates:
-
-- total deviations
-- new deviations
-- in progress
-- resolved
-
-NOTE:
-Uses global array "deviations"
-defined in data/demo-data.js
+   FILE: dashboard.js
+   PURPOSE: Uppdaterar statistik-dashboard
 ========================================================== */
 
+function updateDashboard() {
 
-/* ==========================================================
-FUNCTION
-updateDashboard()
+    const total = deviations.length;
 
-Updates the numbers shown in the dashboard cards
-========================================================== */
+    const newCount = deviations.filter(function(d) {
+        return d.status === "Ny";
+    }).length;
 
-function updateDashboard(){
+    const progressCount = deviations.filter(function(d) {
+        return d.status === "Under utredning";
+    }).length;
 
-    /* ------------------------------------------------------
-    TOTAL DEVIATIONS
-    ------------------------------------------------------ */
+    const actionCount = deviations.filter(function(d) {
+        return d.status === "Åtgärdsplan";
+    }).length;
 
-    const total =
-    deviations.length
-
-
-    /* ------------------------------------------------------
-    NEW DEVIATIONS
-    ------------------------------------------------------ */
-
-    const newCount =
-    deviations.filter(function(d){
-
-        return d.status === "Ny"
-
-    }).length
+    const resolvedCount = deviations.filter(function(d) {
+        return d.status === "Åtgärdad";
+    }).length;
 
 
-    /* ------------------------------------------------------
-    UNDER INVESTIGATION
-    ------------------------------------------------------ */
-
-    const progressCount =
-    deviations.filter(function(d){
-
-        return d.status === "Under utredning"
-
-    }).length
-
-
-    /* ------------------------------------------------------
-    RESOLVED
-    ------------------------------------------------------ */
-
-    const resolvedCount =
-    deviations.filter(function(d){
-
-        return d.status === "Åtgärdad"
-
-    }).length
-
-
-    /* ------------------------------------------------------
-    UPDATE UI
-    ------------------------------------------------------ */
-
-    document.getElementById("totalCount").innerText =
-    total
-
-
-    document.getElementById("newCount").innerText =
-    newCount
-
-
-    document.getElementById("progressCount").innerText =
-    progressCount
-
-
-    document.getElementById("resolvedCount").innerText =
-    resolvedCount
+    document.getElementById("totalCount").innerText = total;
+    document.getElementById("newCount").innerText = newCount;
+    document.getElementById("progressCount").innerText = progressCount;
+    document.getElementById("actionCount").innerText = actionCount;
+    document.getElementById("resolvedCount").innerText = resolvedCount;
 
 }
