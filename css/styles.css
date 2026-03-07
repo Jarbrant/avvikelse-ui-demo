@@ -1,130 +1,79 @@
 /* ============================================
-GLOBAL STYLES
+   GLOBAL STYLES
 ============================================ */
-
-body{
-
-font-family: Arial, sans-serif;
-background:#f4f6f9;
-margin:0;
-
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  margin: 0;
 }
-
 
 /* ============================================
-HEADER
+   HEADER
 ============================================ */
-
-.header{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-
-padding:20px;
-background:white;
-border-bottom:1px solid #ddd;
-
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: white;
+  border-bottom: 1px solid #ddd;
 }
-
 
 /* ============================================
-FILTER PANEL
+   FILTER PANEL
 ============================================ */
-
-.filter-panel{
-
-background:white;
-padding:20px;
-
-display:flex;
-gap:10px;
-
-border-bottom:1px solid #eee;
-
+.filter-panel {
+  background: white;
+  padding: 20px;
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid #eee;
 }
-
 
 /* ============================================
-DEVIATION CARD
+   DEVIATION CARD
 ============================================ */
-
-.deviation-card{
-
-background:white;
-
-padding:20px;
-margin:20px;
-
-border-radius:8px;
-
-box-shadow:0 2px 6px rgba(0,0,0,0.05);
-
+.deviation-card {
+  background: white;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
-
 
 /* ============================================
-STATUS BADGES
+   STATUS BADGES
 ============================================ */
-
-.badge{
-
-padding:5px 10px;
-border-radius:6px;
-font-size:12px;
-
+.badge {
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
 }
-
-.badge-new{
-background:#ffdddd;
-}
-
-.badge-progress{
-background:#fff3cd;
-}
-
-.badge-done{
-background:#d4edda;
-}
-
+.badge-new      { background: #ffdddd; }
+.badge-progress { background: #fff3cd; }
+.badge-done     { background: #d4edda; }
 
 /* ============================================
-MODAL
+   MODAL
 ============================================ */
-
-.modal{
-
-position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
-background:rgba(0,0,0,0.4);
-
-display:flex;
-align-items:center;
-justify-content:center;
-
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background: white;
+  padding: 30px;
+  width: 400px;
+  border-radius: 10px;
 }
 
-.modal-content{
-
-background:white;
-
-padding:30px;
-
-width:400px;
-
-border-radius:10px;
-
-}
-
-
-.hidden{
-
-display:none;
-
+.hidden {
+  display: none;
 }
