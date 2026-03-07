@@ -1,84 +1,46 @@
 /* ==========================================================
-FILE: comments.js
-PURPOSE:
-Handles comment functionality in the deviation system.
-
-Users (ex: kitchen, admin) can respond to deviations.
-
-Each deviation has:
-comments: [
-  {
-    author: "",
-    text: ""
-  }
-]
-
-The functions here allow adding comments and updating UI.
+   FILE: comments.js
+   PURPOSE: Hanterar kommentarer / dialog på avvikelser
 ========================================================== */
 
+function addComment(id, text) {
 
-/* ==========================================================
-FUNCTION
-addComment()
-
-Adds a comment to a deviation.
-
-PARAMETERS
-id   = deviation id
-text = comment text
-========================================================== */
-
-function addComment(id, text){
-
-    /* ------------------------------------------------------
-    Validate input
-    ------------------------------------------------------ */
-
-    if(!text || text.trim() === ""){
-        return
+    if (!text || text.trim() === "") {
+        return;
     }
 
+    const deviation = deviations.find(function(d) {
+        return d.id === id;
+    });
 
-    /* ------------------------------------------------------
-    Find deviation in the global array
-    ------------------------------------------------------ */
-
-    const deviation =
-    deviations.find(function(d){
-
-        return d.id === id
-
-    })
-
-
-    if(!deviation){
-        return
+    if (!deviation) {
+        return;
     }
 
+    /* Hämta aktiv roll */
+    const role = document.getElementById("roleSelect").value;
 
-    /* ------------------------------------------------------
-    Create new comment object
-    ------------------------------------------------------ */
+    const authorName = role === "Beställare"
+        ? "Anna Karlsson"
+        : "Erik Ström";
+
+    /* Skapa tidsstämpel */
+    const now = new Date();
+    const timeStr =
+        now.getFullYear() + "-" +
+        String(now.getMonth() + 1).padStart(2, "0") + "-" +
+        String(now.getDate()).padStart(2, "0") + " " +
+        String(now.getHours()).padStart(2, "0") + ":" +
+        String(now.getMinutes()).padStart(2, "0");
 
     const newComment = {
+        author: authorName,
+        role: role,
+        text: text,
+        time: timeStr
+    };
 
-        author: "Kök",  // Demo user
-        text: text
+    deviation.comments.push(newComment);
 
-    }
-
-
-    /* ------------------------------------------------------
-    Add comment to deviation
-    ------------------------------------------------------ */
-
-    deviation.comments.push(newComment)
-
-
-    /* ------------------------------------------------------
-    Re-render UI
-    ------------------------------------------------------ */
-
-    renderDeviations()
-
+    renderDeviations();
 }
